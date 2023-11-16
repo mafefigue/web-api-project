@@ -4,8 +4,8 @@
 
 ### Integrantes
 
-| Nombre        | Carnet        |
-| María Fernanda Figueroa Gestoni| 00109822 |
+| Nombre                          |  Carnet  |
+| María Fernanda Figueroa Gestoni | 00109822 |
 | Jonathan Rodrigo Rivera Jiménez | 00014620 |
-| Daniel Isaías Juárez Gutiérrez | 00012922 |
-|               |               |
+| Daniel Isaías Juárez Gutiérrez  | 00012922 |
+
