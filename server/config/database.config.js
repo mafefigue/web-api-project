@@ -22,7 +22,7 @@ const connect = async ()=>{
 // disconnect to database method:
 const disconnect = async ()=>{
     try {
-        await Mongoose.disconnect(uri);
+        await Mongoose.disconnect();
         debug("Connection to database end");
     } catch (error) {
         process.exit(1);
