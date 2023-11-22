@@ -21,19 +21,21 @@ const userShema = new Schema({
         type: String,
         required: true
     },
-    salt: {
+    salt:{
         type: String
     },
     profile_pic:{
         type: String,
+        trim: true,
         default: null
     },
     desc:{
         type: String,
         default: null
     },
-    reputacion: {
-        type: int,
+    reputacion:{
+        type: Number,
+        min: 0,
         default: 0
     }
 }, {timestamps: true});
