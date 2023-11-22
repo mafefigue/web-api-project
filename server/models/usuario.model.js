@@ -27,6 +27,14 @@ const userShema = new Schema({
     profile_pic:{
         type: String,
         default: null
+    },
+    desc:{
+        type: String,
+        default: null
+    },
+    reputacion: {
+        type: int,
+        default: 0
     }
 }, {timestamps: true});
 userShema.methods = {
