@@ -1,5 +1,3 @@
-// import { Auth0Provider } from "@auth0/auth0-react";
-// import { useAuth0 } from "@auth0/auth0-react";
 import logoCuadrado from "../assets/logoCuadrado.svg";
 
 import React from "react";
@@ -9,7 +7,7 @@ function SignIn() {
     <div className=" h-screen bg-black bg-repeat-y">
       <div className="max-w-md mx-auto  bg-black p-10 mb-4 ">
         <h1 className="text-2xl font-semibold text-white mb-3 text-center">
-          Log in
+          Sign In
         </h1>
         <img
           className="w-21 h-21 box-border px-3 py-3 "
@@ -39,7 +37,7 @@ function SignIn() {
             // value={title}
             autoFocus
           />
-          <button className="bg-indigo-500 px-3 py-3 text-white font-bold rounded-lg m-2 self-center justify-center">
+          <button className="bg-indigo-500 px-3 py-3 text-white font-bold rounded-lg m-2 self-center justify-center  hover:bg-indigo-400">
             Iniciar sesión
           </button>
         </div>
