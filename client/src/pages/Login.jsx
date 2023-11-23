@@ -52,17 +52,19 @@ function Login() {
             // value={title}
             autoFocus
           />
-          <Button className="bg-indigo-500 px-3 py-3 text-white font-bold rounded-lg m-2 self-center justify-center">
+          <button className="bg-indigo-500 px-3 py-3 text-white font-bold rounded-lg m-2 self-center justify-center mb-4">
             Iniciar sesión
-          </Button>
-          <h3>También puedes:</h3>
+          </button>
+          <h3 className="text-lg font-bold text-white text-center">
+            También puedes:
+          </h3>
           <LoginButton className="mx-auto" />
         </div>
       </div>
-      <footer>
+      <div>
         <h3>¿Aún no tienes una cuenta?</h3>
-        <Button>Registrate ahora</Button>
-      </footer>
+        <Button text="Registrate ahora"></Button>
+      </div>
     </div>
   );
 }
