@@ -19,6 +19,7 @@ const userShema = new Schema({
     },
     contrasenia:{
         type: String,
+        trim: true,
         required: true
     },
     salt:{
@@ -26,12 +27,10 @@ const userShema = new Schema({
     },
     profile_pic:{
         type: String,
-        trim: true,
-        default: null
+        trim: true
     },
     desc:{
-        type: String,
-        default: null
+        type: String
     },
     reputacion:{
         type: Number,
