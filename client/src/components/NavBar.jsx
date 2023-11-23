@@ -19,5 +19,11 @@ export const NavBar = () => {
             <a href="#">EMPRENDIMIENTOS</a>
         </li>
     </ul>
+    
+
+    
   )
 }
+
+
+      
