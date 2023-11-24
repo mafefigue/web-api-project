@@ -25,7 +25,7 @@ controller.register = async(req, res, next)=>{
 controller.findByCredencial= async(req, res, next)=>{
     try {
         const {email, password} = req.body;
-        const user = await User.findOne( { email: email });
+        const user = await User.findOne( { correo: email });
         if(!user){
             return res.status(404).json({ error: "User not found"})
         };
@@ -85,7 +85,7 @@ controller.changePassword = async(req, res, next)=>{
         if(!user){
             return res.status(404).json({ error: "User not found"})
         };
-        user.contrasenia =  password;
+        user.contrasenia = password;
         const updatedUser = await user.save();
         if(!updatedUser){
             return res.status(500).json({ error: "User not updated"})
