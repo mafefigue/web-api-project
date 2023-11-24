@@ -6,6 +6,7 @@ const { registerValidator, updateUserValidator,idInParams } = require("../valida
 const authController = require("../controllers/auth.controller");
 
 router.post("/register", registerValidator, runValidation, authController.register);
+router.get("/:id", idInParams, runValidation, authController.findOneById);
 router.put("/:id", idInParams, updateUserValidator, runValidation, authController.updateUser);
 router.patch("/reputation/:id", idInParams, runValidation, authController.changeReputation);
 

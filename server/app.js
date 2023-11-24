@@ -20,6 +20,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // API Router
-app.use("/api", apiRouter);
+app.use("/api/v1", apiRouter);
 
 module.exports = app;
