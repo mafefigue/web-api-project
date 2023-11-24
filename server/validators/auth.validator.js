@@ -46,9 +46,13 @@ validators.updateUserValidator = [
 
 validators.dataValidator=[
     body("email")
-        .optional()
         .trim()
-        .isEmail().withMessage("Email format incorrect")
+        .notEmpty().withMessage("Email is required")
+        .isEmail().withMessage("Email format incorrect"),
+    body("password")
+        .trim()
+        .notEmpty().withMessage("Password is required")
+        .matches(passwordRegexp).withMessage("Password format incorrect")
 ]
 
 validators.idInParams = [

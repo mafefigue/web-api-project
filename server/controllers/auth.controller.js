@@ -22,13 +22,17 @@ controller.register = async(req, res, next)=>{
     }
 };
 
-controller.findByEmail= async(req, res, next)=>{
+controller.findByCredencial= async(req, res, next)=>{
     try {
-        const {email} = req.body;
+        const {email, password} = req.body;
         const user = await User.findOne( { email: email });
         if(!user){
             return res.status(404).json({ error: "User not found"})
         };
+        const correctPassword = (user.contrasenia === password);
+        if(!correctPassword){
+            return res.status(404).json({ error: "Password is incorrect"})
+        }
         return res.status(200).json({ user });
     } catch (error) {
         console.error(error);
