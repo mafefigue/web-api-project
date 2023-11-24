@@ -5,11 +5,12 @@ const controller = {};
 controller.create = async(req, res, next)=>{
     try {
         const { nombre, descripcion, lista_deseos, precio } =req.body;
+        const _precio = parseFloat(precio);
         const articulo = new Articulo({
             nombre: nombre,
             descripcion: descripcion,
             lista_deseos: lista_deseos,
-            precio: precio
+            precio: _precio
         });
         const savedArticulo = await articulo.save();
         if(!savedArticulo){
@@ -54,11 +55,12 @@ controller.updateArticule = async(req, res, next)=>{
         if(!articule){
             return res.status(404).json({ error: "Articule not found"})
         };
+        const _precio = parseFloat(precio);
         const updatedArticule = await Articulo.findByIdAndUpdate( id, {
             nombre: nombre,
             descripcion: descripcion,
             lista_deseos: lista_deseos,
-            precio: precio
+            precio: _precio
         }, {new: true});
         if(!updatedArticule){
             return res.status(500).json({ error: "Articule not updated"})

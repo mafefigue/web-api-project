@@ -64,11 +64,12 @@ controller.changeReputation= async(req, res, next)=>{
     try {
         const { id }= req.params;
         const {reputacion} = req.body;
+        const _reputacion = parseInt(reputacion);
         const user = await User.findById(id);
         if(!user){
             return res.status(404).json({ error: "User not found"})
         };
-        user.reputacion += reputacion;
+        user.reputacion += _reputacion;
         const updatedUser = await user.save();
         if(!updatedUser){
             return res.status(500).json({ error: "User not updated"})
