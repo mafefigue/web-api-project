@@ -32,15 +32,15 @@ validators.updateUserValidator = [
         .trim()
         .isString().withMessage("Picture is a string")
         .isURL().withMessage("Picture is a URL"),
-    body("reputacion")
-        .optional()
-        .trim()
-        .isNumeric().withMessage("Reputacion is a number"),
     body("desc")
         .optional()
         .trim()
         .isString().withMessage("Desc is a String")
-        .isLength( {min:10 , max:150 }).withMessage("Contact format incorrect")
+        .isLength( {min:10 , max:150 }).withMessage("Contact format incorrect"),
+    body("reputacion")
+        .optional()
+        .trim()
+        .isNumeric().withMessage("Reputacion is a number")
 ];
 
 validators.idInParams = [

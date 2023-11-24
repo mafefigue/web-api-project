@@ -20,7 +20,21 @@ controller.register = async(req, res, next)=>{
         console.error(error);
         return res.status(500).json({error: "Internal Server Error"});
     }
-}
+};
+
+controller.findOneById = async(req, res, next)=>{
+    try {
+        const {id}= req.params;
+        const user = await User.findById(id);
+        if(!user){
+            return res.status(404).json({ error: "User not found"});
+        };
+        return res.status(200).json({ user });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({error: "Internal Server Error"});
+    }
+};
 
 controller.updateUser = async(req, res, next)=>{
     try {
@@ -44,7 +58,7 @@ controller.updateUser = async(req, res, next)=>{
         console.error(error);
         return res.status(500).json({error: "Internal Server Error"});
     }
-}
+};
 
 controller.changeReputation= async(req, res, next)=>{
     try {
@@ -64,6 +78,6 @@ controller.changeReputation= async(req, res, next)=>{
         console.error(error);
         return res.status(500).json({error: "Internal Server Error"});
     }
-}
+};
 
 module.exports = controller;
