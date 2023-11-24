@@ -3,7 +3,7 @@ import React from "react";
 function profile() {
   return (
     <div>
-      <h1>Mi perfil</h1>
+      <h1 className="text-2xl font-semibold text-white mb-3 text-center">Mi perfil</h1>
       <div>
         <h3>nombre usuario</h3>
         <img></img>
