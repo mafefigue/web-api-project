@@ -22,6 +22,24 @@ controller.register = async(req, res, next)=>{
     }
 };
 
+controller.findByCredencial= async(req, res, next)=>{
+    try {
+        const {email, password} = req.body;
+        const user = await User.findOne( { email: email });
+        if(!user){
+            return res.status(404).json({ error: "User not found"})
+        };
+        const correctPassword = (user.contrasenia === password);
+        if(!correctPassword){
+            return res.status(404).json({ error: "Password is incorrect"})
+        }
+        return res.status(200).json({ user });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({error: "Internal Server Error"});
+    }
+}
+
 controller.findOneById = async(req, res, next)=>{
     try {
         const {id}= req.params;
@@ -39,14 +57,13 @@ controller.findOneById = async(req, res, next)=>{
 controller.updateUser = async(req, res, next)=>{
     try {
         const { id }= req.params;
-        const { username, password, picture, desc} = req.body;
+        const { username, picture, desc} = req.body;
         const user = await User.findById(id);
         if(!user){
             return res.status(404).json({ error: "User not found"})
         };
         const updatedUser = await User.findByIdAndUpdate( id, {
             username: username,
-            contrasenia: password,
             profile_pic: picture,
             desc: desc
         }, {new: true});
@@ -59,6 +76,26 @@ controller.updateUser = async(req, res, next)=>{
         return res.status(500).json({error: "Internal Server Error"});
     }
 };
+
+controller.changePassword = async(req, res, next)=>{
+    try {
+        const { id }= req.params;
+        const { password } = req.body;
+        const user = await User.findById(id);
+        if(!user){
+            return res.status(404).json({ error: "User not found"})
+        };
+        user.contrasenia =  password;
+        const updatedUser = await user.save();
+        if(!updatedUser){
+            return res.status(500).json({ error: "User not updated"})
+        }
+        return res.status(200).json({ message: "User password updated", user: updatedUser });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({error: "Internal Server Error"});
+    }
+}
 
 controller.changeReputation= async(req, res, next)=>{
     try {

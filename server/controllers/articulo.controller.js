@@ -72,6 +72,25 @@ controller.updateArticule = async(req, res, next)=>{
     }
 };
 
+controller.changeHidden= async(req, res, next)=>{
+    try {
+        const { id }= req.params;
+        const articule = await Articulo.findById(id);
+        if(!articule){
+            return res.status(404).json({ error: "Articule not found"})
+        };
+        articule.hidden = !articule.hidden;
+        const updatedArticule = await articule.save();
+        if(!updatedArticule){
+            return res.status(500).json({ error: "Articule not updated"})
+        }
+        return res.status(200).json({ message: "Articule updated", articule: updatedArticule });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({error: "Internal Server Error"});
+    }
+}
+
 controller.deleteOneArticle = async(req, res, next)=>{
     try {
         const {id}= req.params;

@@ -10,7 +10,7 @@ validators.registerValidator = [
         .isLength( {min:4 , max:32 }).withMessage("Username format incorrect"),
     body("email")
         .trim()
-        .notEmpty().withMessage("User is required")
+        .notEmpty().withMessage("Email is required")
         .isEmail().withMessage("Email format incorrect"),
     body("password")
         .trim()
@@ -22,7 +22,8 @@ validators.updateUserValidator = [
     body("username")
         .optional()
         .trim()
-        .isLength( {min:4 , max:32 }).withMessage("Username format incorrect"),
+        .notEmpty().withMessage("Username is not null")
+        .isLength({ max:32 }).withMessage("Username format incorrect"),
     body("password")
         .optional()
         .trim()
@@ -36,12 +37,23 @@ validators.updateUserValidator = [
         .optional()
         .trim()
         .isString().withMessage("Desc is a String")
-        .isLength( {min:10 , max:150 }).withMessage("Contact format incorrect"),
+        .isLength( { max:150 }).withMessage("Contact format incorrect"),
     body("reputacion")
         .optional()
         .trim()
         .isNumeric().withMessage("Reputacion is a number")
 ];
+
+validators.dataValidator=[
+    body("email")
+        .trim()
+        .notEmpty().withMessage("Email is required")
+        .isEmail().withMessage("Email format incorrect"),
+    body("password")
+        .trim()
+        .notEmpty().withMessage("Password is required")
+        .matches(passwordRegexp).withMessage("Password format incorrect")
+]
 
 validators.idInParams = [
     param("id")
