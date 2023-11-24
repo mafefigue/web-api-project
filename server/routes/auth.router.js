@@ -9,4 +9,4 @@ router.post("/register", registerValidator, runValidation, authController.regist
 router.put("/:id", idInParams, updateUserValidator, runValidation, authController.updateUser);
 router.patch("/reputation/:id", idInParams, runValidation, authController.changeReputation);
 
-module.exports = router
+module.exports = router;
