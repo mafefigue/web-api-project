@@ -25,7 +25,7 @@ controller.register = async(req, res, next)=>{
 controller.updateUser = async(req, res, next)=>{
     try {
         const { id }= req.params;
-        const { username, password, picture} = req.body;
+        const { username, password, picture, desc} = req.body;
         const user = await User.findById(id);
         if(!user){
             return res.status(404).json({ error: "User not found"})
@@ -33,12 +33,33 @@ controller.updateUser = async(req, res, next)=>{
         const updatedUser = await User.findByIdAndUpdate( id, {
             username: username,
             contrasenia: password,
-            profile_pic: picture
+            profile_pic: picture,
+            desc: desc
         }, {new: true});
         if(!updatedUser){
             return res.status(500).json({ error: "User not updated"})
         }
         return res.status(200).json({ message: "User updated", user: updatedUser });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({error: "Internal Server Error"});
+    }
+}
+
+controller.changeReputation= async(req, res, next)=>{
+    try {
+        const { id }= req.params;
+        const {reputacion} = req.body;
+        const user = await User.findById(id);
+        if(!user){
+            return res.status(404).json({ error: "User not found"})
+        };
+        user.reputacion += reputacion;
+        const updatedUser = await user.save();
+        if(!updatedUser){
+            return res.status(500).json({ error: "User not updated"})
+        }
+        return res.status(200).json({ message: "User reputation updated", user: updatedUser });
     } catch (error) {
         console.error(error);
         return res.status(500).json({error: "Internal Server Error"});
