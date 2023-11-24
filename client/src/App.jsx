@@ -12,9 +12,6 @@ function App() {
     //   </Routes>
     // </BrowserRouter>
     <SignIn/>
-    
-    
-  
   )
 }
 
