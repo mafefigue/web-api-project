@@ -9,6 +9,7 @@ router.post("/", createArticuleValidator, runValidation, articuleController.crea
 router.get("/", runValidation, articuleController.findAll);
 router.get("/:id", idInParams, runValidation, articuleController.findOneById);
 router.put("/:id", idInParams, updateArticuleValidator, runValidation, articuleController.updateArticule);
+router.patch("/hidden/:id", idInParams, runValidation, articuleController.changeHidden);
 router.delete("/:id", idInParams, runValidation, articuleController.deleteOneArticle);
 
 module.exports = router;
