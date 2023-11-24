@@ -30,11 +30,11 @@ const userShema = new Schema({
         trim: true
     },
     desc:{
-        type: String
+        type: String,
+        default: null
     },
     reputacion:{
         type: Number,
-        min: 0,
         default: 0
     }
 }, {timestamps: true});
