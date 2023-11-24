@@ -40,13 +40,6 @@ validators.updateArticuleValidator = [
         .isNumeric().withMessage("Precio format incorrect")
 ];
 
-validators.dataValidator=[
-    body("hidden")
-        .trim()
-        .isEmpty().withMessage("Hidden is required")
-        .isBoolean().withMessage("Hidden is a boolean")
-]
-
 validators.idInParams = [
     param("id")
         .notEmpty().withMessage("ID is required")
