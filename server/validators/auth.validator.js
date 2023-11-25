@@ -44,17 +44,6 @@ validators.updateUserValidator = [
         .isNumeric().withMessage("Reputacion is a number")
 ];
 
-validators.dataValidator=[
-    body("email")
-        .trim()
-        .notEmpty().withMessage("Email is required")
-        .isEmail().withMessage("Email format incorrect"),
-    body("password")
-        .trim()
-        .notEmpty().withMessage("Password is required")
-        .matches(passwordRegexp).withMessage("Password format incorrect")
-]
-
 validators.idInParams = [
     param("id")
         .notEmpty().withMessage("ID is required")

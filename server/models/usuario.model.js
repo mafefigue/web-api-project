@@ -25,13 +25,17 @@ const userShema = new Schema({
     salt:{
         type: String
     },
+    tokens:{
+        type: [String],
+        default: []
+    },
     profile_pic:{
         type: String,
         trim: true
     },
     desc:{
-        type: String,
-        default: null
+        type: [String],
+        default: []
     },
     reputacion:{
         type: Number,
