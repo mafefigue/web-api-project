@@ -1,6 +1,6 @@
 // import { Route, Router, Routes } from "react-router";
 // import { Route, BrowserRouter, Routes } from "react-router-dom";
-import profile from './pages/profile'
+import Profile from './pages/profile'
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
   //     <Route path="/perfil" element={<Profile />} />
   //   </Routes>
   // </BrowserRouter>
-  <profile/>
+  <Profile/>
   );
 }
 
