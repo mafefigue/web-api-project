@@ -12,7 +12,7 @@ const LoginButton = () => {
   return (
     !isAuthenticated && (
       <button
-        className="bg-indigo-500 px-3 py-3 text-white font-bold rounded-lg m-2 self-center justify-center "
+        className="bg-indigo-500 px-3 py-3 text-white font-bold rounded-lg m-2 self-center justify-center mb-4  hover:bg-indigo-600"
         onClick={() => loginWithRedirect}
       >
         Sign In with Google
@@ -52,18 +52,21 @@ function Login() {
             // value={title}
             autoFocus
           />
-          <button className="bg-indigo-500 px-3 py-3 text-white font-bold rounded-lg m-2 self-center justify-center mb-4">
+          <button className="bg-indigo-500 px-3 py-3 text-white font-bold rounded-lg m-2 self-center justify-center mb-4 hover:bg-indigo-600">
             Iniciar sesión
           </button>
           <h3 className="text-lg font-bold text-white text-center">
             También puedes:
           </h3>
           <LoginButton className="mx-auto" />
+
+          <h3 className="text-lg font-bold text-white text-center">
+            ¿Aún no tienes una cuenta?
+          </h3>
+          <button className="bg-indigo-500 px-3 py-3 text-white font-bold rounded-lg m-2 self-center justify-center hover:bg-indigo-600">
+            Registrate ahora
+          </button>
         </div>
-      </div>
-      <div>
-        <h3>¿Aún no tienes una cuenta?</h3>
-        <Button text="Registrate ahora"></Button>
       </div>
     </div>
   );
