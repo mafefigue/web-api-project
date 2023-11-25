@@ -15,8 +15,8 @@ export const Header = () => {
     }
     
     return (
-        <div className=' bg-slate-900'>
-        <header className="flex place-content-between h-24">
+        <div className=' bg-slate-900 '>
+        <header className="flex justify-between h-24">
         <img className=" flex box-border h-50" src={Logo} alt="Logo" />
 
             {/*navbar*/}
@@ -52,7 +52,7 @@ export const Header = () => {
     </div>
             
     {/* search bar*/}        
-    <form className=" w-[540px] relative  place-self-center md:shrink-0 sm:shrink-0 shrink-0">
+    <form className=" w-[540px] relative  place-self-center shrink-0 md:shrink-0 sm:shrink-0">
         <div className="relative">
             <input type="search" placeholder="type here" className=" w-96 p-4 rounded-full bg-slate-800" />
             <button className=" flex absolute right-44 top-1/2 -translate-y-1/2 p-3 bg-slate-500 rounded-full" >
