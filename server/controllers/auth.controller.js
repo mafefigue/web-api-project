@@ -1,3 +1,4 @@
+const { createToken, verifyToken } = require("../utils/jwt.tools");
 const User = require("../models/usuario.model");
 
 const controller = {};
@@ -22,18 +23,28 @@ controller.register = async(req, res, next)=>{
     }
 };
 
-controller.findByCredencial= async(req, res, next)=>{
+controller.login= async(req, res, next)=>{
     try {
         const {email, password} = req.body;
         const user = await User.findOne( { correo: email });
         if(!user){
             return res.status(404).json({ error: "User not found"})
         };
-        const correctPassword = (user.contrasenia === password);
-        if(!correctPassword){
-            return res.status(404).json({ error: "Password is incorrect"})
-        }
-        return res.status(200).json({ user });
+        if(!user.comparePassword(password)){
+            return res.status(401).json({ error: "Incorrect Password"})
+        };
+        const token = await createToken(user._id);
+        let _tokens = [...user.tokens];
+        const _verifyPromises = _tokens.map( async(_t)=>{
+            const status = await verifyToken(_t);
+            return status? _t : null;
+        })
+        _tokens = (await Promise.all(_verifyPromises))
+            .filter(_t => _t).slice(0, 4);
+        _tokens = [token, ..._tokens];
+        user.tokens = _tokens;
+        await user.save();
+        return res.status(200).json({ token });
     } catch (error) {
         console.error(error);
         return res.status(500).json({error: "Internal Server Error"});
