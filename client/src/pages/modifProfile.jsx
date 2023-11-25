@@ -1,15 +1,9 @@
-/*
-import { AiOutlineSmile } from "react-icons/ai";
-<AiOutlineSmile className="max-w-md mx-auto" />
-
-*/
-
 import { VscThumbsupFilled } from "react-icons/vsc";
 import { VscThumbsdownFilled } from "react-icons/vsc";
-import { VscEdit } from "react-icons/vsc";
+import { VscCheck } from "react-icons/vsc";
 import React from "react";
 
-function Profile() {
+function ModificarPerfil() {
   return (
     <div className="m-4">
       <h1 className="text-2xl font-semibold text-white mb-3 text-center">
@@ -20,7 +14,7 @@ function Profile() {
           <h3 className="text-base font-bold text-white text-center">
             nombre usuario
           </h3>
-          <img className="circular--square"></img>
+          <img></img>
           <h3 className="text-base font-bold text-white text-center">
             correo usuario
           </h3>
@@ -36,17 +30,22 @@ function Profile() {
             </button>
           </div>
           <div className="bg-slate-400 p-10 mb-4 rounded-xl authButtons basis-1/4 border-4 flex flex-col items-center justify-center">
-            <h2 className="text-lg font-bold text-white text-center">
+            <h2 className="text-lg font-bold text-white text-center mb-4">
               Información de contacto
             </h2>
-            <p className="p-5">aqui iría la info que el usuario ingrese </p>
+            <textarea
+              className="bg-slate-300 p-3 w-full mb-2"
+              placeholder="¿De qué otra forma se puede contactarte?"
+              //onChange={(e) => setDescription(e.target.value)}
+              //value={description}
+            ></textarea>
             <button className="bg-pink-500 px-3 py-3 flex flex-wrap text-white font-bold rounded-lg m-2 self-center justify-center items-center hover:bg-pink-600">
-              <h3 className="px-3"> Editar</h3><VscEdit />
+              <h3 className="px-3"> Guardar cambios</h3> < VscCheck />
             </button>
           </div>
         </div>
 
-        <div className="bg-lime-600 p-10 mb-4 rounded-xl authButtons items-center justify-center">
+        <div className="bg-lime-600 p-10 mb-4 rounded-xl authButtons flex flex-col items-center justify-center">
           <h2 className="text-lg font-bold text-white text-center">
             Mis publicaciones
           </h2>
@@ -57,4 +56,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default ModificarPerfil;
