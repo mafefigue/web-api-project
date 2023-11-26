@@ -1,7 +1,7 @@
 import { Auth0Provider } from "@auth0/auth0-react";
 import { useAuth0 } from "@auth0/auth0-react";
 import logoCuadrado from "../assets/logoCuadrado.svg";
-import Button from "../components/Button";
+//import Button from "../components/Button";
 
 import React from "react";
 
