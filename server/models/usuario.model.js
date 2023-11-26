@@ -29,13 +29,18 @@ const userShema = new Schema({
         type: [String],
         default: []
     },
-    profile_pic:{
-        type: String,
-        trim: true
-    },
-    desc:{
+    roles: {
         type: [String],
         default: []
+    },
+    profile_pic:{
+        type: String,
+        trim: true,
+        default: ""
+    },
+    desc:{
+        type: String,
+        default: ""
     },
     reputacion:{
         type: Number,
