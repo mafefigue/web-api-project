@@ -1,5 +1,6 @@
 const debug = require('debug')("app:auth-middleware");
-const User = require("../models/usuario.model")
+const User = require("../models/usuario.model");
+const ROLES = require("../data/roles.constants.json");
 const { verifyToken } = require("../utils/jwt.tools");
 const PREFIX= "Bearer";
 const middleware = {};
@@ -38,6 +39,23 @@ middleware.authentication = async(req, res, next)=>{
         console.error(error);
         return res.status(500).json({error: "Internal Server Error"});
     }
+}
+
+middleware.authorization = async(roleRequired = ROLES.SYSADMIN)=>{
+    return (req, res, next)=>{
+        try {
+            const { roles=[] } = req.user;
+            const isAuth = roles.includes(roleRequired);
+            const isSysAdmin = roles.includes(ROLES.SYSADMIN);
+            if(!isAuth && !isSysAdmin){
+                return res.status(403).json({error: "Forbidden"});
+            }
+            next();
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({error: "Internal Server Error"});
+        }
+    };
 }
 
 module.exports =  middleware;

@@ -1,5 +1,6 @@
 const { createToken, verifyToken } = require("../utils/jwt.tools");
 const User = require("../models/usuario.model");
+const ROLES = require("../data/roles.constants.json")
 
 const controller = {};
 
@@ -13,7 +14,8 @@ controller.register = async(req, res, next)=>{
         const newUser = new User({
             username: username, 
             correo: email, 
-            contrasenia: password
+            contrasenia: password,
+            roles: [ROLES.USER]
         });
         await newUser.save();
         return res.status(201).json({ message: "User registered" });
