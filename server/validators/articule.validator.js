@@ -3,6 +3,9 @@ const { body, param } = require("express-validator");
 const validators = {};
 
 validators.createArticuleValidator = [
+    param("id")
+        .optional()
+        .isMongoId().withMessage("ID is MongoID"),
     body("nombre")
         .trim()
         .notEmpty().withMessage("User is required")
@@ -18,26 +21,10 @@ validators.createArticuleValidator = [
     body("precio")
         .optional()
         .trim()
-        .isNumeric().withMessage("Precio format incorrect")
-];
-
-validators.updateArticuleValidator = [
-    body("nombre")
+        .isNumeric().withMessage("Precio format incorrect"),
+    body("Imagens")
         .optional()
-        .trim()
-        .isLength( {min:4 , max:32 }).withMessage("Username format incorrect"),
-    body("descripcion")
-        .optional()
-        .trim()
-        .isLength( {min:4 , max:32 }).withMessage("Description format incorrect"),
-    body("lista_deseos")
-        .optional()
-        .trim()
-        .isString().withMessage("Lista_deseos format incorrect"),
-    body("precio")
-        .optional()
-        .trim()
-        .isNumeric().withMessage("Precio format incorrect")
+        .isURL().withMessage("Imagens format incorrect")
 ];
 
 validators.idInParams = [

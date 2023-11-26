@@ -22,6 +22,11 @@ const articuloShema = new Schema({
         min: 0.00,
         default: 0.00
     },
+    imagens: {
+        type: [String],
+        trim: true,
+        default: []
+    },
     hidden: {
         type: Boolean,
         default: false
