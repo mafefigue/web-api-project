@@ -1,4 +1,4 @@
-import {CardProduct} from "./components/CardProduct"
+
 
 function App() {
 
@@ -6,7 +6,7 @@ function App() {
 
     <>
       <div className="">
-      <CardProduct />
+      
       </div>
     
     </>
