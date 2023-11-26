@@ -2,17 +2,22 @@ const Articulo = require("../models/articulo.model");
 
 const controller = {};
 
-controller.create = async(req, res, next)=>{
+controller.saveArt = async(req, res, next)=>{
     try {
-        const { nombre, descripcion, lista_deseos, precio } =req.body;
+        const { nombre, descripcion, lista_deseos, precio, imagenes } =req.body;
+        const { id } = req.params;
+        const { user } = req;
         const _precio = parseFloat(precio);
-        const articulo = new Articulo({
-            nombre: nombre,
-            descripcion: descripcion,
-            lista_deseos: lista_deseos,
-            precio: _precio
-        });
-        const savedArticulo = await articulo.save();
+        let articule = await Articulo.findById(id);
+        if(!articule){
+            articule = new Articulo();
+        };
+        articule["nombre"] = nombre;
+        articule["descripcion"] = descripcion;
+        articule["lista_deseos"] = lista_deseos;
+        articule["precio"] = _precio;
+        articule["imagens"] = imagenes;
+        const savedArticulo = await articule.save();
         if(!savedArticulo){
             return res.status(409).json({error: "Error creating articule"});
         }
@@ -47,31 +52,6 @@ controller.findOneById = async(req, res, next)=>{
     }
 };
 
-controller.updateArticule = async(req, res, next)=>{
-    try {
-        const { id }= req.params;
-        const { nombre, descripcion, lista_deseos, precio} = req.body;
-        const articule = await Articulo.findById(id);
-        if(!articule){
-            return res.status(404).json({ error: "Articule not found"})
-        };
-        const _precio = parseFloat(precio);
-        const updatedArticule = await Articulo.findByIdAndUpdate( id, {
-            nombre: nombre,
-            descripcion: descripcion,
-            lista_deseos: lista_deseos,
-            precio: _precio
-        }, {new: true});
-        if(!updatedArticule){
-            return res.status(500).json({ error: "Articule not updated"})
-        }
-        return res.status(200).json({ message: "Articule updated", articule: updatedArticule });
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({error: "Internal Server Error"});
-    }
-};
-
 controller.changeHidden= async(req, res, next)=>{
     try {
         const { id }= req.params;
@@ -94,13 +74,9 @@ controller.changeHidden= async(req, res, next)=>{
 controller.deleteOneArticle = async(req, res, next)=>{
     try {
         const {id}= req.params;
-        const articule = await Articulo.findById(id);
-        if(!articule){
-            return res.status(404).json({ error: "Articule not found"});
-        };
         const deletedArticule = await Articulo.findByIdAndDelete(id);
         if(!deletedArticule){
-            return res.status(500).json({ message: "Articule not deleted"});
+            return res.status(404).json({ error: "Articule not found" });
         }
         return res.status(200).json({ message: "Articule deleted" });
     } catch (error) {
