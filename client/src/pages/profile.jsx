@@ -1,9 +1,3 @@
-/*
-import { AiOutlineSmile } from "react-icons/ai";
-<AiOutlineSmile className="max-w-md mx-auto" />
-
-*/
-
 import { VscThumbsupFilled } from "react-icons/vsc";
 import { VscThumbsdownFilled } from "react-icons/vsc";
 import { VscEdit } from "react-icons/vsc";
