@@ -3,7 +3,8 @@ import { Route, BrowserRouter, Routes } from "react-router-dom";
 // import Login from "./pages/login";
 // import Profile from "./pages/profile";
 // import ModificarPerfil from "./pages/modifProfile";
-import AddProduct from "./pages/addProduct";
+// import AddProduct from "./pages/addProduct";
+import ViewProduct from './pages/viewProduct'
 
 function App() {
   return (
@@ -13,13 +14,16 @@ function App() {
     //     <Route path="/signIn" element={<SignIn />} />
     //     <Route path="/perfil" element={<Profile />} />
     //     <Route path="/modificarPerfil" element={<ModificarPerfil />} />
+    //     <Route path="/nuevaVenta" element={<AddProduct />} />
+    //     <Route path="/verProducto" element={<ViewProduct />} />
     //   </Routes>
     // </BrowserRouter>
 
     //  <Profile/>
     // <ModificarPerfil/>
     // <SignIn/>
-    <AddProduct />
+    // <AddProduct />
+    <ViewProduct/>
   );
 }
 
