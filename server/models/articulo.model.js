@@ -27,9 +27,19 @@ const articuloShema = new Schema({
         trim: true,
         default: []
     },
+    estado:{
+        type: String,
+        default: "Disponible",
+        trim: true
+    },
     hidden: {
         type: Boolean,
         default: false
+    },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: "Usuario",
+        required:true
     }
 }, {timestamps: true});
 

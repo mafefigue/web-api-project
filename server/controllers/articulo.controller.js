@@ -11,6 +11,11 @@ controller.saveArt = async(req, res, next)=>{
         let articule = await Articulo.findById(id);
         if(!articule){
             articule = new Articulo();
+            articule["user"] = user._id;
+        }else{
+            if(!articule["user"].equals(user._id)){
+                return res.status(403).json({ error: "This is not your articule"});
+            }
         };
         articule["nombre"] = nombre;
         articule["descripcion"] = descripcion;
@@ -30,7 +35,8 @@ controller.saveArt = async(req, res, next)=>{
 
 controller.findAll = async(req, res, next)=>{
     try {
-        const articules = await Articulo.find({ hidden: false});
+        const articules = await Articulo.find({ hidden: false})
+            .populate("Usuario", "username correo");
         return res.status(200).json({ articules });
     } catch (error) {
         console.error(error);
@@ -41,7 +47,8 @@ controller.findAll = async(req, res, next)=>{
 controller.findOneById = async(req, res, next)=>{
     try {
         const {id}= req.params;
-        const articule = await Articulo.findById(id);
+        const articule = await Articulo.findOne({ _id: id, hidden:false })
+            .populate("Usuario", "username correo");
         if(!articule){
             return res.status(404).json({ error: "Articule not found"});
         };
@@ -52,10 +59,36 @@ controller.findOneById = async(req, res, next)=>{
     }
 };
 
+controller.findByUser = async (req, res, next)=>{
+    try {
+        const {id}= req.params;
+        const articules = await Articulo.find({ user: id, hidden: false })
+            .populate("Usuario", "username correo");
+        return res.status(200).json({ articules });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({error: "Internal Server Error"});
+    }
+};
+
+controller.findOwn = async (req, res, next)=>{
+    try {
+        const { _id: userId}= req.user;
+        const articules = await Articulo.find({ user: userId })
+            .populate("Usuario", "username correo");
+        return res.status(200).json({ articules });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({error: "Internal Server Error"});
+    }
+};
+
 controller.changeHidden= async(req, res, next)=>{
     try {
         const { id }= req.params;
-        const articule = await Articulo.findById(id);
+        const { user }=req.user;
+        const articule = await Articulo.findOne({ _id: id, hidden:false })
+            .populate("Usuario", "username correo -_id");
         if(!articule){
             return res.status(404).json({ error: "Articule not found"})
         };
@@ -69,12 +102,33 @@ controller.changeHidden= async(req, res, next)=>{
         console.error(error);
         return res.status(500).json({error: "Internal Server Error"});
     }
-}
+};
+
+controller.changeDisponibilidad= async(req, res, next)=>{
+    try {
+        const { id }= req.params;
+        const { estado } = req.body;
+        const art = await Articulo.findById(id);
+        if(!art){
+            return res.status(404).json({ error: "Articule not found"})
+        };
+        art["estado"] = estado;
+        const updatedArt = await art.save();
+        if(!updatedArt){
+            return res.status(500).json({ error: "Articule not updated"})
+        }
+        return res.status(200).json({ message: "Articule status updated", user: updatedArt });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({error: "Internal Server Error"});
+    }
+};
 
 controller.deleteOneArticle = async(req, res, next)=>{
     try {
         const {id}= req.params;
-        const deletedArticule = await Articulo.findByIdAndDelete(id);
+        const { user } = req;
+        const deletedArticule = await Articulo.findOneAndDelete({ _id: id, user: user._id });
         if(!deletedArticule){
             return res.status(404).json({ error: "Articule not found" });
         }
@@ -83,6 +137,6 @@ controller.deleteOneArticle = async(req, res, next)=>{
         console.error(error);
         return res.status(500).json({error: "Internal Server Error"});
     }
-}
+};
 
 module.exports = controller;
