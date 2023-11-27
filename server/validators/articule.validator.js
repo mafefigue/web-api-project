@@ -21,8 +21,19 @@ validators.createArticuleValidator = [
     body("precio")
         .optional()
         .trim()
-        .isNumeric().withMessage("Precio format incorrect")
+        .isNumeric().withMessage("Precio format incorrect"),
+    body("etiqueta")
+        .trim()
+        .notEmpty().withMessage("Etiqueta is required")
+        .isMongoId().withMessage("Etiqueta is MongoID")
 ];
+
+validators.etiquetaValidator = [
+    body("etiqueta")
+        .trim()
+        .notEmpty().withMessage("Etiqueta is required")
+        .isMongoId().withMessage("Etiqueta is MongoID")
+]
 
 validators.disponibilidadValidator = [
     body("estado")

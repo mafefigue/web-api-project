@@ -10,10 +10,11 @@ const articuleController = require("../controllers/articulo.controller");
 router.post(["/", "/id"], authentication, authorization(ROLES.USER), createArticuleValidator, runValidation, articuleController.saveArt);
 router.get("/", runValidation, articuleController.findAll);
 router.get("/:id", idInParams, runValidation, articuleController.findOneById);
-router.get("/users/:id", idInParams, runValidation, articuleController.findByUser);
+router.get("/etiqueta/:id", idInParams, runValidation, articuleController.findByEtiqueta);
+router.get("/user/:id", idInParams, runValidation, articuleController.findByUser);
 router.get("/own", authentication, authorization(ROLES.USER), articuleController.findOwn)
 router.patch("/hidden/:id", authentication, authorization(ROLES.USER), idInParams, runValidation, articuleController.changeHidden);
-router.patch("/status/:id", idInParams, disponibilidadValidator , runValidation, articuleController.changeDisponibilidad);
+router.patch("/status/:id", authentication, authorization(ROLES.USER), idInParams, disponibilidadValidator , runValidation, articuleController.changeDisponibilidad);
 router.delete("/:id", authentication, authorization(ROLES.USER), idInParams, runValidation, articuleController.deleteOneArticle);
 
 module.exports = router;
