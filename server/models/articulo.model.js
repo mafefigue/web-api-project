@@ -22,8 +22,9 @@ const articuloShema = new Schema({
         min: 0.00,
         default: 0.00
     },
-    imagens: {
-        type: [String],
+    etiqueta: {
+        type: [Schema.Types.ObjectId],
+        ref: "Etiqueta",
         trim: true,
         default: []
     },

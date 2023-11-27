@@ -4,7 +4,7 @@ const controller = {};
 
 controller.saveArt = async(req, res, next)=>{
     try {
-        const { nombre, descripcion, lista_deseos, precio, imagenes } =req.body;
+        const { nombre, descripcion, lista_deseos, precio } =req.body;
         const { id } = req.params;
         const { user } = req;
         const _precio = parseFloat(precio);
@@ -21,7 +21,6 @@ controller.saveArt = async(req, res, next)=>{
         articule["descripcion"] = descripcion;
         articule["lista_deseos"] = lista_deseos;
         articule["precio"] = _precio;
-        articule["imagens"] = imagenes;
         const savedArticulo = await articule.save();
         if(!savedArticulo){
             return res.status(409).json({error: "Error creating articule"});

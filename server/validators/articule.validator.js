@@ -21,10 +21,7 @@ validators.createArticuleValidator = [
     body("precio")
         .optional()
         .trim()
-        .isNumeric().withMessage("Precio format incorrect"),
-    body("Imagens")
-        .optional()
-        .isURL().withMessage("Imagens format incorrect")
+        .isNumeric().withMessage("Precio format incorrect")
 ];
 
 validators.disponibilidadValidator = [
