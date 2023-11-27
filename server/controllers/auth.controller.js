@@ -53,14 +53,10 @@ controller.login= async(req, res, next)=>{
     }
 }
 
-controller.findOneById = async(req, res, next)=>{
+controller.aboutMe = async(req, res, next)=>{
     try {
-        const {id}= req.params;
-        const user = await User.findById(id);
-        if(!user){
-            return res.status(404).json({ error: "User not found"});
-        };
-        return res.status(200).json({ user });
+        const { _id , username, correo, roles }= req.user;
+        return res.status(200).json({ _id , username, correo, roles });
     } catch (error) {
         console.error(error);
         return res.status(500).json({error: "Internal Server Error"});
@@ -69,19 +65,15 @@ controller.findOneById = async(req, res, next)=>{
 
 controller.updateUser = async(req, res, next)=>{
     try {
-        const { id }= req.params;
+        const { _id }= req.user;
         const { username, picture, desc} = req.body;
-        const user = await User.findById(id);
-        if(!user){
-            return res.status(404).json({ error: "User not found"})
-        };
-        const updatedUser = await User.findByIdAndUpdate( id, {
+        const updatedUser = await User.findByIdAndUpdate( _id, {
             username: username,
             profile_pic: picture,
             desc: desc
         }, {new: true});
         if(!updatedUser){
-            return res.status(500).json({ error: "User not updated"})
+            return res.status(500).json({ error: "User not found"})
         }
         return res.status(200).json({ message: "User updated", user: updatedUser });
     } catch (error) {
@@ -92,18 +84,18 @@ controller.updateUser = async(req, res, next)=>{
 
 controller.changePassword = async(req, res, next)=>{
     try {
-        const { id }= req.params;
+        const { _id }= req.user;
         const { password } = req.body;
-        const user = await User.findById(id);
-        if(!user){
+        const myUser = await User.findById(_id);
+        if(!myUser){
             return res.status(404).json({ error: "User not found"})
         };
-        user.contrasenia = password;
-        const updatedUser = await user.save();
+        myUser["contrasenia"] = password;
+        const updatedUser = await myUser.save();
         if(!updatedUser){
-            return res.status(500).json({ error: "User not updated"})
+            return res.status(500).json({ error: "Password not updated"})
         }
-        return res.status(200).json({ message: "User password updated", user: updatedUser });
+        return res.status(200).json({ message: "User password updated" });
     } catch (error) {
         console.error(error);
         return res.status(500).json({error: "Internal Server Error"});
