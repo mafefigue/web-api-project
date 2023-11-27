@@ -27,6 +27,12 @@ validators.createArticuleValidator = [
         .isURL().withMessage("Imagens format incorrect")
 ];
 
+validators.disponibilidadValidator = [
+    body("estado")
+        .notEmpty().withMessage("Status is required")
+        .isIn(["Disponible", "Agotado", "Reservado"]).withMessage("Status format incorrect")
+];
+
 validators.idInParams = [
     param("id")
         .notEmpty().withMessage("ID is required")
