@@ -1,3 +1,4 @@
+import { CardList } from "./components/CardList"
 
 
 function App() {
@@ -6,7 +7,7 @@ function App() {
 
     <>
       <div className="">
-      
+      <CardList />
       </div>
     
     </>
