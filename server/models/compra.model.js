@@ -2,12 +2,12 @@ const Mongoose = require("mongoose");
 const Schema = Mongoose.Schema;
 
 const compraShema = new Schema({
-    id_producto: {
+    producto: {
         type: Schema.Types.ObjectId,
         ref: "Articulo",
         required:true
     },
-    id_comprador: {
+    comprador: {
         type: Schema.Types.ObjectId,
         ref: "Usuario",
         required:true
