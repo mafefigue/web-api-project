@@ -4,8 +4,10 @@ const Schema = Mongoose.Schema;
 const etiquetaShema = new Schema({
     nombre:{
         type: String,
+        unique: true,
         required: true,
-        trim: true
+        trim: true,
+        lowercase: true
     }
 }, {timestamps: true});
 
