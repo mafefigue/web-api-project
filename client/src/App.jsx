@@ -1,4 +1,3 @@
-
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 // import SignIn from "./pages/signin";
 // import Login from "./pages/login";
@@ -19,7 +18,6 @@ function App() {
     //     <Route path="/verProducto" element={<ViewProduct />} />
     //   </Routes>
     // </BrowserRouter>
-
     //  <Profile/>
     // <ModificarPerfil/>
     // <SignIn/>
