@@ -26,9 +26,15 @@ controller.saveImg = async(req, res, next)=>{
 controller.findByArt = async(req, res, next)=>{
     try {
         const {id}= req.params;
-        const imgArt = await Imagen.find({ reference: id })
-            .populate("Articulo", "nombre descripcion estado");
-        return res.status(200).json({ imgArt });
+        const { pagination, limit, offset }= req.query;
+        const imgArt = await Imagen.find({ reference: id }, undefined, {
+            sort: [{ createdAt: -1}],
+            limit: pagination?limit:undefined,
+            skip: pagination?offset:undefined 
+        }).populate("Articulo", "nombre descripcion estado");
+        return res.status(200).json({ imgArt ,
+            count: pagination ? await Articulo.countDocuments({hidden: false}): undefined
+        });
     } catch (error) {
         console.error(error);
         return res.status(500).json({error: "Internal Server Error"});

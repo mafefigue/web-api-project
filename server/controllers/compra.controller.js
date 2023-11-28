@@ -42,8 +42,15 @@ controller.findOne= async(req, res, next)=>{
 controller.findByUser= async(req, res, next)=>{
     try {
         const { user }= req.params;
-        const compras = await Comprar.find({ comprador: user});
-        return res.status(200).json({ compras });
+        const { pagination, limit, offset }= req.query;
+        const compras = await Comprar.find({ comprador: user}, undefined, {
+            sort: [{ createdAt: -1}],
+            limit: pagination?limit:undefined,
+            skip: pagination?offset:undefined 
+        });
+        return res.status(200).json({ compras ,
+            count: pagination ? await Comprar.countDocuments({hidden: false}): undefined
+        });
     } catch (error) {
         console.error(error);
         return res.status(500).json({error: "Internal Server Error"});
