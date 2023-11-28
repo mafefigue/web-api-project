@@ -1,3 +1,4 @@
+
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 // import SignIn from "./pages/signin";
 // import Login from "./pages/login";
@@ -24,7 +25,7 @@ function App() {
     // <SignIn/>
     // <AddProduct />
     <ViewProduct/>
-  );
+  )
 }
 
 export default App;
