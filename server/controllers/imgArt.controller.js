@@ -26,7 +26,7 @@ controller.saveImg = async(req, res, next)=>{
 controller.findByArt = async(req, res, next)=>{
     try {
         const {id}= req.params;
-        const { pagination, limit, offset }= req.query;
+        const { pagination = true, limit=5, offset=0 }= req.query;
         const imgArt = await Imagen.find({ reference: id }, undefined, {
             sort: [{ createdAt: -1}],
             limit: pagination?limit:undefined,

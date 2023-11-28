@@ -35,7 +35,7 @@ controller.saveArt = async(req, res, next)=>{
 
 controller.findAll = async(req, res, next)=>{
     try {
-        const { pagination, limit, offset }= req.query;
+        const { pagination=true, limit=5, offset=0 }= req.query;
         const articules = await Articulo.find({ hidden: false}, undefined, {
             sort: [{ createdAt: -1}],
             limit: pagination?limit:undefined,
@@ -68,7 +68,7 @@ controller.findOneById = async(req, res, next)=>{
 controller.findByUser = async (req, res, next)=>{
     try {
         const {id}= req.params;
-        const { pagination, limit, offset }= req.query;
+        const { pagination=true, limit=5, offset=0 }= req.query;
         const articules = await Articulo.find({ user: id, hidden: false }, undefined, {
             sort: [{ createdAt: -1}],
             limit: pagination?limit:undefined,
@@ -86,7 +86,7 @@ controller.findByUser = async (req, res, next)=>{
 controller.findOwn = async (req, res, next)=>{
     try {
         const { _id: userId}= req.user;
-        const { pagination, limit, offset }= req.query;
+        const { pagination=true, limit=5, offset=0 }= req.query;
         const articules = await Articulo.find({ user: userId }, undefined, {
             sort: [{ createdAt: -1}],
             limit: pagination?limit:undefined,
@@ -104,7 +104,7 @@ controller.findOwn = async (req, res, next)=>{
 controller.findByEtiqueta = async (req, res, next)=>{
     try {
         const {id}= req.params;
-        const { pagination, limit, offset }= req.query;
+        const { pagination=true, limit=5, offset=0 }= req.query;
         const articules = await Articulo.find({ etiquetas: id, hidden: false }, undefined, {
             sort: [{ createdAt: -1}],
             limit: pagination?limit:undefined,

@@ -42,7 +42,7 @@ controller.findOne= async(req, res, next)=>{
 controller.findByUser= async(req, res, next)=>{
     try {
         const { user }= req.params;
-        const { pagination, limit, offset }= req.query;
+        const { pagination=true, limit=5, offset=0 }= req.query;
         const compras = await Comprar.find({ comprador: user}, undefined, {
             sort: [{ createdAt: -1}],
             limit: pagination?limit:undefined,
