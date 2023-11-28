@@ -67,7 +67,8 @@ controller.findOneUser = async(req, res, next)=>{
     try {
         const { id }= req.params;
         const user = (await User.findById(id))
-            .populate("reputacion", "usuario recomendacion timestamps");
+            .populate("reputacion.usuario", "username correo")
+            .populate("reputacion", "recomendacion timestamps");
         if(!user){
             return res.status(404).json({ error: "User not found"})
         };
@@ -85,7 +86,9 @@ controller.findAll = async(req, res, next)=>{
             sort: [{ createdAt: -1}],
             limit: pagination?limit:undefined,
             skip: pagination?offset:undefined 
-        }).populate("reputacion", "usuario recomendacion timestamps");
+        })
+            .populate("reputacion.usuario", "username correo")
+            .populate("reputacion", "recomendacion timestamps");
         return res.status(200).json({ articules,
             count: pagination ? await User.countDocuments({hidden: false}): undefined
         });
@@ -103,7 +106,9 @@ controller.updateUser = async(req, res, next)=>{
             username: username,
             profile_pic: picture,
             desc: desc
-        }, {new: true})).populate("reputacion", "usuario recomendacion timestamps");
+        }, {new: true}))
+            .populate("reputacion.usuario", "username correo")
+            .populate("reputacion", "recomendacion timestamps");;
         if(!updatedUser){
             return res.status(500).json({ error: "User not found"})
         }
@@ -124,7 +129,8 @@ controller.changePassword = async(req, res, next)=>{
         };
         myUser["contrasenia"] = password;
         const updatedUser = (await myUser.save())
-            .populate("reputacion", "usuario recomendacion timestamps");
+            .populate("reputacion.usuario", "username correo")
+            .populate("reputacion", "recomendacion timestamps");
         if(!updatedUser){
             return res.status(500).json({ error: "Password not updated"})
         }
@@ -167,7 +173,8 @@ controller.changeReputation= async(req, res, next)=>{
         }
         user.reputacion = reputacion;
         const updatedUser = (await user.save())
-        .populate("reputacion", "usuario recomendacion timestamps");
+            .populate("reputacion.usuario", "username correo")
+            .populate("reputacion", "recomendacion timestamps");
         if(!updatedUser){
             return res.status(500).json({ error: "User not updated"})
         }
