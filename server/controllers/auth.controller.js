@@ -55,8 +55,39 @@ controller.login= async(req, res, next)=>{
 
 controller.aboutMe = async(req, res, next)=>{
     try {
-        const { _id , username, correo, roles }= req.user;
-        return res.status(200).json({ _id , username, correo, roles });
+        const { _id , username, correo, roles, profile_pic, reputacion }= req.user;
+        return res.status(200).json({ _id , username, correo, roles, profile_pic, reputacion});
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({error: "Internal Server Error"});
+    }
+};
+
+controller.findOneUser = async(req, res, next)=>{
+    try {
+        const { id }= req.params;
+        const user = await User.findById(id);
+        if(!user){
+            return res.status(404).json({ error: "User not found"})
+        };
+        return res.status(200).json({ user });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({error: "Internal Server Error"});
+    }
+};
+
+controller.findAll = async(req, res, next)=>{
+    try {
+        const { pagination=true, limit=5, offset=0 }= req.query;
+        const articules = await User.find({ hidden: false}, undefined, {
+            sort: [{ createdAt: -1}],
+            limit: pagination?limit:undefined,
+            skip: pagination?offset:undefined 
+        });
+        return res.status(200).json({ articules,
+            count: pagination ? await User.countDocuments({hidden: false}): undefined
+        });
     } catch (error) {
         console.error(error);
         return res.status(500).json({error: "Internal Server Error"});
@@ -105,13 +136,19 @@ controller.changePassword = async(req, res, next)=>{
 controller.changeReputation= async(req, res, next)=>{
     try {
         const { id }= req.params;
-        const {reputacion} = req.body;
-        const _reputacion = parseInt(reputacion);
+        const { toUser } = req.user;
         const user = await User.findById(id);
         if(!user){
             return res.status(404).json({ error: "User not found"})
         };
-        user.reputacion += _reputacion;
+        let _reputacion = user["reputacion"] || [];
+        const already = _reputacion.findIndex(_i => _i.equals(toUser._id))>=0;
+        if(already){
+            _reputacion = _reputacion.filter(_i => !_i.equals(toUser._id));
+        }else{
+            _reputacion = [toUser._id, ..._reputacion];
+        }
+        user["reputacion"] = _reputacion;
         const updatedUser = await user.save();
         if(!updatedUser){
             return res.status(500).json({ error: "User not updated"})
