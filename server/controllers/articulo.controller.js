@@ -22,7 +22,10 @@ controller.saveArt = async(req, res, next)=>{
         articule["lista_deseos"] = lista_deseos;
         articule["precio"] = _precio;
         articule["etiquetas"] = etiqueta;
-        const savedArticulo = await articule.save();
+        const savedArticulo = (await art.save())
+            .populate("usuario", "username correo")
+            .populate("etiqueta", "nombre")
+            .populate("ofertas", "username correo");
         if(!savedArticulo){
             return res.status(409).json({error: "Error creating articule"});
         }
@@ -40,8 +43,9 @@ controller.findAll = async(req, res, next)=>{
             sort: [{ createdAt: -1}],
             limit: pagination?limit:undefined,
             skip: pagination?offset:undefined 
-        }).populate("Usuario", "username correo")
-            .populate("Ofertas", "username correo");
+        }).populate("usuario", "username correo")
+            .populate("etiqueta", "nombre")
+            .populate("ofertas", "username correo");
         return res.status(200).json({ articules,
             count: pagination ? await Articulo.countDocuments({hidden: false}): undefined
         });
@@ -55,8 +59,9 @@ controller.findOneById = async(req, res, next)=>{
     try {
         const {id}= req.params;
         const articule = await Articulo.findOne({ _id: id, hidden:false })
-            .populate("Usuario", "username correo")
-            .populate("Ofertas", "username correo");
+            .populate("usuario", "username correo")
+            .populate("etiqueta", "nombre")
+            .populate("ofertas", "username correo");
         if(!articule){
             return res.status(404).json({ error: "Articule not found"});
         };
@@ -75,7 +80,9 @@ controller.findByUser = async (req, res, next)=>{
             sort: [{ createdAt: -1}],
             limit: pagination?limit:undefined,
             skip: pagination?offset:undefined 
-        }).populate("Usuario", "username correo");
+        }).populate("usuario", "username correo")
+            .populate("etiqueta", "nombre")
+            .populate("ofertas", "username correo");
         return res.status(200).json({ articules,
             count: pagination ? await Articulo.countDocuments({hidden: false}): undefined
         });
@@ -93,8 +100,9 @@ controller.findOwn = async (req, res, next)=>{
             sort: [{ createdAt: -1}],
             limit: pagination?limit:undefined,
             skip: pagination?offset:undefined 
-        }).populate("Usuario", "username correo")
-            .populate("Ofertas", "username correo");
+        }).populate("usuario", "username correo")
+            .populate("etiqueta", "nombre")
+            .populate("ofertas", "username correo");
         return res.status(200).json({ articules,
             count: pagination ? await Articulo.countDocuments({hidden: false}): undefined
         });
@@ -112,7 +120,9 @@ controller.findByEtiqueta = async (req, res, next)=>{
             sort: [{ createdAt: -1}],
             limit: pagination?limit:undefined,
             skip: pagination?offset:undefined 
-        }).populate("Usuario", "username correo etiquetas");
+        }).populate("usuario", "username correo")
+            .populate("etiqueta", "nombre")
+            .populate("ofertas", "username correo");
         return res.status(200).json({ articules,
             count: pagination ? await Articulo.countDocuments({hidden: false}): undefined
         });
@@ -127,14 +137,15 @@ controller.changeHidden= async(req, res, next)=>{
     try {
         const { id }= req.params;
         const { _id: userId }=req.user;
-        const articule = await Articulo.findOne({ _id: id, user: userId })
-            .populate("Usuario", "username correo");
+        const articule = await Articulo.findOne({ _id: id, user: userId });
         if(!articule){
             return res.status(404).json({ error: "Articule not found"})
         };
         articule.hidden = !articule.hidden;
         const updatedArticule = (await articule.save())
-            .populate("Usuario", "username correo");
+            .populate("usuario", "username correo")
+            .populate("etiqueta", "nombre")
+            .populate("ofertas", "username correo");
         if(!updatedArticule){
             return res.status(500).json({ error: "Articule not updated"})
         }
@@ -155,7 +166,9 @@ controller.changeDisponibilidad= async(req, res, next)=>{
         };
         art["estado"] = estado;
         const updatedArt = (await art.save())
-            .populate("Usuario", "username correo");
+            .populate("usuario", "username correo")
+            .populate("etiqueta", "nombre")
+            .populate("ofertas", "username correo");
         if(!updatedArt){
             return res.status(500).json({ error: "Articule not updated"})
         }
@@ -182,7 +195,10 @@ controller.offerArticule =  async(req, res, next)=>{
             _oferta = [user._id, ..._reputacion];
         }
         art["ofertas"] = _oferta;
-        const updatedArt = await art.save();
+        const updatedArt = (await art.save())
+            .populate("usuario", "username correo")
+            .populate("etiqueta", "nombre")
+            .populate("ofertas", "username correo");
         return res.status(200).json({ message: "Offer articule successfull", updatedArt});
     } catch (error) {
         console.error(error);
@@ -198,8 +214,9 @@ controller.findMyOffers = async (req, res, next)=>{
             sort: [{ createdAt: -1}],
             limit: pagination?limit:undefined,
             skip: pagination?offset:undefined 
-        }).populate("Usuario", "username correo")
-            .populate("Ofertas", "username correo");
+        }).populate("usuario", "username correo")
+            .populate("etiqueta", "nombre")
+            .populate("ofertas", "username correo");
         
         return res.status(200).json({ articules,
             count: pagination ? await Articulo.countDocuments({hidden: false}): undefined
@@ -209,8 +226,6 @@ controller.findMyOffers = async (req, res, next)=>{
         return res.status(500).json({error: "Internal Server Error"});
     }
 };
-
-
 
 controller.deleteOneArticle = async(req, res, next)=>{
     try {
