@@ -1,5 +1,4 @@
-//ruta de donde sacariamos la info de las publicasiones
-import Logo from "../assets/Logo.svg"
+
 
 
 export const CardProduct = () => {
@@ -22,6 +21,7 @@ export const CardProduct = () => {
     </div>
   );
 };
+
 
 
 

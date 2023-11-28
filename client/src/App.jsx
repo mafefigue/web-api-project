@@ -1,3 +1,6 @@
+
+
+
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 // import SignIn from "./pages/signin";
 // import Login from "./pages/login";
@@ -8,6 +11,7 @@ import ViewProduct from './pages/viewProduct'
 
 function App() {
   return (
+
     // <BrowserRouter>
     //   <Routes>
     //     <Route path="/" element={<Login />} />
@@ -23,6 +27,7 @@ function App() {
     // <SignIn/>
     // <AddProduct />
     <ViewProduct/>
+
   )
 }
 
