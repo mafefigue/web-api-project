@@ -4,7 +4,7 @@ const runValidation = require("../validators/index.middleware");
 
 const ROLES = require("../data/roles.constants.json");
 const { authentication } = require("../validators/auth.middleware");
-const { registerValidator, updateUserValidator, dataValidator ,idInParams, paginationValidator } = require("../validators/auth.validator");
+const { registerValidator, updateUserValidator, reputacionValidator ,idInParams, paginationValidator } = require("../validators/auth.validator");
 const authController = require("../controllers/auth.controller");
 
 router.post("/register", registerValidator, runValidation, authController.register);
@@ -14,6 +14,6 @@ router.get("/:id", idInParams, runValidation, authController.findOneUser);
 router.get("/", paginationValidator, runValidation, authController.findAll);
 router.patch("/", authentication, updateUserValidator, runValidation, authController.updateUser);
 router.patch("/password/", authentication, updateUserValidator, runValidation, authController.changePassword);
-router.patch("/reputation/:id", authentication, idInParams, updateUserValidator, runValidation, authController.changeReputation);
+router.patch("/reputation/:id", authentication, idInParams, reputacionValidator, runValidation, authController.changeReputation);
 
 module.exports = router;

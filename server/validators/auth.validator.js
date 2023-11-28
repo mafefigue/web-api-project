@@ -38,9 +38,6 @@ validators.updateUserValidator = [
         .trim()
         .isString().withMessage("Desc is a String")
         .isLength( { max:150 }).withMessage("Contact format incorrect"),
-    body("addReputacion")
-        .optional()
-        .isBoolean().withMessage("Reputacion is boolean")
 ];
 
 validators.idInParams = [
@@ -48,6 +45,15 @@ validators.idInParams = [
         .notEmpty().withMessage("ID is required")
         .isMongoId().withMessage("ID is MongoID")
 ];
+
+validators.reputacionValidator= [
+    body("addReputacion")
+        .notEmpty().withMessage("Reputacion is required")
+        .isBoolean().withMessage("Reputacion is boolean"),
+    body("recomendar")
+        .notEmpty().withMessage("Recomendation is required")
+        .isBoolean().withMessage("Recomendation is boolean")
+]
 
 validators.paginationValidator = [
     query("paginator")
