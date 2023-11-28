@@ -136,7 +136,7 @@ controller.changePassword = async(req, res, next)=>{
 controller.changeReputation= async(req, res, next)=>{
     try {
         const { id }= req.params;
-        const { addReputacion } = req.body;
+        const { addReputacion , recomendar} = req.body;
         const { toUser} = req.user;
         const user = await User.findById(id);
         if(!user){
@@ -145,20 +145,14 @@ controller.changeReputation= async(req, res, next)=>{
         let reputacion = user.reputacion || [];
         const alreadyIndex = reputacion.findIndex(item => item.user.equals(toUser._id));
         if (addReputacion) {
-            // Agregar reputación
             if (alreadyIndex >= 0) {
-                // Si ya existe una reputación para el usuario, no hace nada
                 return res.status(200).json({ message: "Reputation already exists", user });
             }
-            // Si no existe una reputación para el usuario, agrega una nueva
-            reputacion = [
-                ...reputacion,
-                {
-                    user: toUser._id,
-                    recomendacion: true,
-                    timestamps: new Date()
-                }
-            ];
+            reputacion = [ ...reputacion, {
+                user: toUser._id,
+                recomendacion: recomendar,
+                timestamps: new Date()
+            }];
         } else {
             // Eliminar reputación
             if (alreadyIndex >= 0) {
