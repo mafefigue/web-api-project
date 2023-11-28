@@ -66,8 +66,7 @@ controller.aboutMe = async(req, res, next)=>{
 controller.findOneUser = async(req, res, next)=>{
     try {
         const { id }= req.params;
-        const user = (await User.findById(id))
-            .populate("reputacion", "usuario recomendacion timestamps");
+        const user = await User.findById(id);
         if(!user){
             return res.status(404).json({ error: "User not found"})
         };
@@ -85,7 +84,7 @@ controller.findAll = async(req, res, next)=>{
             sort: [{ createdAt: -1}],
             limit: pagination?limit:undefined,
             skip: pagination?offset:undefined 
-        }).populate("reputacion", "usuario recomendacion timestamps");
+        });
         return res.status(200).json({ articules,
             count: pagination ? await User.countDocuments({hidden: false}): undefined
         });
@@ -99,11 +98,11 @@ controller.updateUser = async(req, res, next)=>{
     try {
         const { _id }= req.user;
         const { username, picture, desc} = req.body;
-        const updatedUser = (await User.findByIdAndUpdate( _id, {
+        const updatedUser = await User.findByIdAndUpdate( _id, {
             username: username,
             profile_pic: picture,
             desc: desc
-        }, {new: true})).populate("reputacion", "usuario recomendacion timestamps");
+        }, {new: true});
         if(!updatedUser){
             return res.status(500).json({ error: "User not found"})
         }
@@ -123,8 +122,7 @@ controller.changePassword = async(req, res, next)=>{
             return res.status(404).json({ error: "User not found"})
         };
         myUser["contrasenia"] = password;
-        const updatedUser = (await myUser.save())
-            .populate("reputacion", "usuario recomendacion timestamps");
+        const updatedUser = await myUser.save();
         if(!updatedUser){
             return res.status(500).json({ error: "Password not updated"})
         }
@@ -138,7 +136,7 @@ controller.changePassword = async(req, res, next)=>{
 controller.changeReputation= async(req, res, next)=>{
     try {
         const { id }= req.params;
-        const { addReputacion , recomendar} = req.body;
+        const { addReputacion } = req.body;
         const { toUser} = req.user;
         const user = await User.findById(id);
         if(!user){
@@ -147,14 +145,20 @@ controller.changeReputation= async(req, res, next)=>{
         let reputacion = user.reputacion || [];
         const alreadyIndex = reputacion.findIndex(item => item.user.equals(toUser._id));
         if (addReputacion) {
+            // Agregar reputación
             if (alreadyIndex >= 0) {
+                // Si ya existe una reputación para el usuario, no hace nada
                 return res.status(200).json({ message: "Reputation already exists", user });
             }
-            reputacion = [ ...reputacion, {
-                user: toUser._id,
-                recomendacion: recomendar,
-                timestamps: new Date()
-            }];
+            // Si no existe una reputación para el usuario, agrega una nueva
+            reputacion = [
+                ...reputacion,
+                {
+                    user: toUser._id,
+                    recomendacion: true,
+                    timestamps: new Date()
+                }
+            ];
         } else {
             // Eliminar reputación
             if (alreadyIndex >= 0) {
@@ -166,8 +170,7 @@ controller.changeReputation= async(req, res, next)=>{
             }
         }
         user.reputacion = reputacion;
-        const updatedUser = (await user.save())
-        .populate("reputacion", "usuario recomendacion timestamps");
+        const updatedUser = await user.save();
         if(!updatedUser){
             return res.status(500).json({ error: "User not updated"})
         }
