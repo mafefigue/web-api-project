@@ -4,7 +4,7 @@ import Logo from "../assets/Logo.svg"
 
 export const CardProduct = () => {
   return (
-    <div className="max-w-sm rounded-3xl overflow-hidden shadow-lg cursor-pointer bg-slate-500">
+    <div className="max-w-sm m-4 rounded-3xl overflow-hidden shadow-lg cursor-pointer bg-slate-500">
       <img className="w-full" src={Logo} alt="foto" />
       <div className="px-6 py-4">
         <div className="font-bold text-xl mb-2">calculadora ti</div>
