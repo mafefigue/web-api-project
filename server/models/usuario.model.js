@@ -19,22 +19,33 @@ const userShema = new Schema({
     },
     contrasenia:{
         type: String,
+        trim: true,
         required: true
     },
-    salt: {
+    salt:{
         type: String
+    },
+    tokens:{
+        type: [String],
+        default: []
+    },
+    roles: {
+        type: [String],
+        default: []
     },
     profile_pic:{
         type: String,
-        default: null
+        trim: true,
+        default: ""
     },
     desc:{
         type: String,
-        default: null
+        default: ""
     },
-    reputacion: {
-        type: int,
-        default: 0
+    reputacion:{
+        type: [Schema.Types.ObjectId],
+        ref: "Usuario",
+        default: []
     }
 }, {timestamps: true});
 userShema.methods = {
