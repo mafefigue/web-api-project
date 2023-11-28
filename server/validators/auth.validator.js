@@ -37,17 +37,25 @@ validators.updateUserValidator = [
         .optional()
         .trim()
         .isString().withMessage("Desc is a String")
-        .isLength( { max:150 }).withMessage("Contact format incorrect"),
-    body("reputacion")
-        .optional()
-        .trim()
-        .isNumeric().withMessage("Reputacion is a number")
+        .isLength( { max:150 }).withMessage("Contact format incorrect")
 ];
 
 validators.idInParams = [
     param("id")
         .notEmpty().withMessage("ID is required")
         .isMongoId().withMessage("ID is MongoID")
+];
+
+validators.paginationValidator = [
+    query("paginator")
+        .notEmpty().withMessage("Pagination is required")
+        .isBoolean().withMessage("Pagination is boolean"),
+    query("limit")
+        .optional()
+        .isNumeric().withMessage("Limit is a number"),
+    query("offset")
+        .optional()
+        .isNumeric().withMessage("Offset is a number")
 ];
 
 module.exports = validators;

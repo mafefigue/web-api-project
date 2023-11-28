@@ -43,8 +43,9 @@ const userShema = new Schema({
         default: ""
     },
     reputacion:{
-        type: Number,
-        default: 0
+        type: [Schema.Types.ObjectId],
+        ref: "Usuario",
+        default: []
     }
 }, {timestamps: true});
 userShema.methods = {
