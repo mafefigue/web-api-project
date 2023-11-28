@@ -15,7 +15,7 @@ export const Header = () => {
     }
     
     return (
-    <div className='flex flex-shrink'>    
+    <div className=' mx-auto'>    
         <header className="flex flex-shrink justify-between flex-auto h-24 bg-slate-900">
             <img className="w-16 md:w-32 lg:w-80 hidden md:block" src={Logo} alt="Logo" />
             <img className="w-24 md:hidden lg:hidden" src={Logobuho} alt="Logo" />
@@ -49,7 +49,7 @@ export const Header = () => {
             
             
 
-            <div onClick={handleNav} className='block md:hidden '>
+            <div onClick={handleNav} className='block md:hidden relative right-24 '>
                 {!nav ? <AiOutlineClose size={1}/> : <AiOutlineMenu size={40} color='white' />}
             </div>
 
@@ -70,7 +70,7 @@ export const Header = () => {
             </div>
 
             {/*profile pic button*/}
-            <div className="relative hidden md:block">
+            <div className=" relative hidden md:block">
                 <button className="absolute right-8 top-1/2 
                 -translate-y-1/2 p-6 bg-black rounded-full" >    
                 </button>
