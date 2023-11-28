@@ -30,4 +30,16 @@ validators.idInParams = [
         .isMongoId().withMessage("ID is MongoID")
 ];
 
+validators.paginationValidator = [
+    query("paginator")
+        .notEmpty().withMessage("Pagination is required")
+        .isBoolean().withMessage("Pagination is boolean"),
+    query("limit")
+        .optional()
+        .isNumeric().withMessage("Limit is a number"),
+    query("offset")
+        .optional()
+        .isNumeric().withMessage("Offset is a number")
+];
+
 module.exports = validators;

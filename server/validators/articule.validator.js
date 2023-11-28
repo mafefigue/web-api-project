@@ -1,3 +1,4 @@
+const { query } = require("express");
 const { body, param } = require("express-validator");
 
 const validators = {};
@@ -25,6 +26,9 @@ validators.createArticuleValidator = [
     body("etiqueta")
         .trim()
         .notEmpty().withMessage("Etiqueta is required")
+        .isArray().withMessage("Etiqueta is array"),
+    body("etiqueta.*")
+        .trim
         .isMongoId().withMessage("Etiqueta is MongoID")
 ];
 
@@ -32,19 +36,34 @@ validators.etiquetaValidator = [
     body("etiqueta")
         .trim()
         .notEmpty().withMessage("Etiqueta is required")
+        .isArray().withMessage("Etiqueta is array"),
+    body("etiqueta.*")
+        .trim
         .isMongoId().withMessage("Etiqueta is MongoID")
 ]
 
 validators.disponibilidadValidator = [
     body("estado")
         .notEmpty().withMessage("Status is required")
-        .isIn(["Disponible", "Agotado", "Reservado"]).withMessage("Status format incorrect")
+        .isIn(["Disponible", "Agotado", "Reservado"]).withMessage("Status value incorrect")
 ];
 
 validators.idInParams = [
     param("id")
         .notEmpty().withMessage("ID is required")
         .isMongoId().withMessage("ID is MongoID")
+];
+
+validators.paginationValidator = [
+    query("paginator")
+        .notEmpty().withMessage("Pagination is required")
+        .isBoolean().withMessage("Pagination is boolean"),
+    query("limit")
+        .optional()
+        .isNumeric().withMessage("Limit is a number"),
+    query("offset")
+        .optional()
+        .isNumeric().withMessage("Offset is a number")
 ];
 
 module.exports = validators;
