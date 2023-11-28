@@ -55,7 +55,7 @@ controller.login= async(req, res, next)=>{
 
 controller.aboutMe = async(req, res, next)=>{
     try {
-        const { _id , username, correo, roles }= req.user;
+        const { _id , username, correo, roles, profile_pic, reputacion }= req.user;
         return res.status(200).json({ _id , username, correo, roles, profile_pic, reputacion});
     } catch (error) {
         console.error(error);
