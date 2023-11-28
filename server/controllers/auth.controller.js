@@ -136,19 +136,40 @@ controller.changePassword = async(req, res, next)=>{
 controller.changeReputation= async(req, res, next)=>{
     try {
         const { id }= req.params;
-        const { toUser } = req.user;
+        const { addReputacion } = req.body;
+        const { toUser} = req.user;
         const user = await User.findById(id);
         if(!user){
             return res.status(404).json({ error: "User not found"})
         };
-        let _reputacion = user["reputacion"] || [];
-        const already = _reputacion.findIndex(_i => _i.equals(toUser._id))>=0;
-        if(already){
-            _reputacion = _reputacion.filter(_i => !_i.equals(toUser._id));
-        }else{
-            _reputacion = [toUser._id, ..._reputacion];
+        let reputacion = user.reputacion || [];
+        const alreadyIndex = reputacion.findIndex(item => item.user.equals(toUser._id));
+        if (addReputacion) {
+            // Agregar reputación
+            if (alreadyIndex >= 0) {
+                // Si ya existe una reputación para el usuario, no hace nada
+                return res.status(200).json({ message: "Reputation already exists", user });
+            }
+            // Si no existe una reputación para el usuario, agrega una nueva
+            reputacion = [
+                ...reputacion,
+                {
+                    user: toUser._id,
+                    recomendacion: true,
+                    timestamps: new Date()
+                }
+            ];
+        } else {
+            // Eliminar reputación
+            if (alreadyIndex >= 0) {
+                // Si ya existe una reputación para el usuario, elimínala
+                reputacion.splice(alreadyIndex, 1);
+            } else {
+                // Si no existe una reputación para el usuario, no hace nada
+                return res.status(200).json({ message: "Reputation does not exist", user });
+            }
         }
-        user["reputacion"] = _reputacion;
+        user.reputacion = reputacion;
         const updatedUser = await user.save();
         if(!updatedUser){
             return res.status(500).json({ error: "User not updated"})

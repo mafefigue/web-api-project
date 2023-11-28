@@ -37,7 +37,10 @@ validators.updateUserValidator = [
         .optional()
         .trim()
         .isString().withMessage("Desc is a String")
-        .isLength( { max:150 }).withMessage("Contact format incorrect")
+        .isLength( { max:150 }).withMessage("Contact format incorrect"),
+    body("addReputacion")
+        .optional()
+        .isBoolean().withMessage("Reputacion is boolean")
 ];
 
 validators.idInParams = [

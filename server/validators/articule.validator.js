@@ -24,11 +24,13 @@ validators.createArticuleValidator = [
         .trim()
         .isNumeric().withMessage("Precio format incorrect"),
     body("etiqueta")
+        .optional()
         .trim()
         .notEmpty().withMessage("Etiqueta is required")
         .isArray().withMessage("Etiqueta is array"),
     body("etiqueta.*")
-        .trim
+        .optional()
+        .trim()
         .isMongoId().withMessage("Etiqueta is MongoID")
 ];
 

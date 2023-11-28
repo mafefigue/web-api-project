@@ -4,16 +4,15 @@ const controller = {};
 
 controller.saveCompra = async(req, res, next)=>{
     try {
-        const { user, articule, calificacion } =req.body;
+        const { user, articule, opinion } =req.body;
         const { id } = req.params;
-        const _precio = parseFloat(precio);
         let venta = await Comprar.findById(id);
         if(!venta){
             venta = new Comprar();
         };
         venta["producto"] = articule;
         venta["comprador"] = user;
-        venta["calificacion"] = calificacion;
+        venta["opinion"] = opinion;
         const savedVenta = await venta.save();
         if(!savedVenta){
             return res.status(409).json({error: "Error creating venta"});

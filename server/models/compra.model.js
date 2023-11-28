@@ -12,10 +12,20 @@ const compraShema = new Schema({
         ref: "Usuario",
         required:true
     },
-    calificacion: {
-        type: String,
-        required: true,
-        trim: true
+    opinion: {
+        type: {
+            calificacion:{
+                type: String,
+                required: true,
+                trim: true
+            },
+            comentario:{
+                type: String,
+                required: true,
+                trim: true
+            }
+        },
+        required: true
     }
 }, {timestamps: true});
 

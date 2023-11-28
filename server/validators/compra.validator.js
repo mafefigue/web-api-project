@@ -15,7 +15,12 @@ validators.createValidator = [
         .trim()
         .notEmpty().withMessage("Articule is required")
         .isMongoId().withMessage("Articule is MongoID"),
-    body("calificacion")
+    body("opinion.*.calificacion")
+        .trim()
+        .notEmpty().withMessage("Calificacion is required")
+        .isNumeric().withMessage("Calificacion is a number")
+        .isInt({min: 0, max: 5}).withMessage("Callificacion is between 0 and 5"),
+    body("opinion.*.comentario")
         .trim()
         .notEmpty().withMessage("Calificacion is required")
         .isString().withMessage("Calificacion is a string")

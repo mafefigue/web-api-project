@@ -41,6 +41,11 @@ const articuloShema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Usuario",
         required:true
+    },
+    ofertas:{
+        type: [Schema.Types.ObjectId],
+        ref: "Usuario",
+        default: []
     }
 }, {timestamps: true});
 
