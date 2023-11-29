@@ -1,5 +1,4 @@
-const { query } = require("express");
-const { body, param } = require("express-validator");
+const { body, param, query } = require("express-validator");
 
 const validators = {};
 
@@ -40,8 +39,8 @@ validators.etiquetaValidator = [
         .notEmpty().withMessage("Etiqueta is required")
         .isArray().withMessage("Etiqueta is array"),
     body("etiqueta.*")
-        .trim
         .isMongoId().withMessage("Etiqueta is MongoID")
+        .trim()
 ]
 
 validators.disponibilidadValidator = [
